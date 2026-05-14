@@ -1,0 +1,99 @@
+@page {
+  size: letter;
+  margin: 1in;
+  @bottom-center {
+    content: counter(page);
+    font-family: "Times New Roman", serif;
+    font-size: 12pt;
+  }
+  @footnote {
+    border-top: 1px solid #000;
+    margin-top: 0.35em;
+    padding-top: 0.25em;
+  }
+}
+
+@page:first {
+  @bottom-center {
+    content: "";
+  }
+}
+
+body {
+  font-family: "Times New Roman", serif;
+  font-size: 12pt;
+  line-height: 2;
+  color: #000;
+}
+
+#title-block-header {
+  page-break-after: always;
+  text-align: center;
+  padding-top: 2.15in;
+}
+
+#title-block-header .title {
+  font-size: 12pt;
+  font-weight: bold;
+  line-height: 2;
+  margin: 0 0 0.75in 0;
+}
+
+#title-block-header .author,
+#title-block-header .date {
+  font-size: 12pt;
+  font-weight: normal;
+  line-height: 2;
+  margin: 0;
+}
+
+h1,
+h2 {
+  text-align: left;
+  font-size: 12pt;
+  font-weight: bold;
+  line-height: 2;
+  margin: 2em 0 1em 0;
+}
+
+h3 {
+  text-align: left;
+  font-size: 12pt;
+  font-weight: normal;
+  line-height: 2;
+  margin: 2em 0 1em 0;
+}
+
+p {
+  text-indent: 0.5in;
+  margin: 0;
+}
+
+#title-block-header p,
+h1 + p,
+h2 + p,
+h3 + p {
+  text-indent: 0;
+}
+
+.footnote {
+  float: footnote;
+  font-size: 10pt;
+  line-height: 1;
+  text-indent: 0;
+}
+
+::footnote-call {
+  font-size: 10pt;
+  vertical-align: super;
+  line-height: 0;
+}
+
+::footnote-marker {
+  font-size: 10pt;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+}

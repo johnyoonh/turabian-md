@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ "$#" -lt 2 ]; then
+  echo "Usage: md2pdf <input.md> <output.pdf>" >&2
+  exit 1
+fi
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+INPUT="$1"
+OUTPUT="$2"
+
+if ! command -v pandoc >/dev/null 2>&1; then
+  echo "Error: pandoc is required but was not found in PATH." >&2
+  exit 1
+fi
+
+if ! command -v weasyprint >/dev/null 2>&1; then
+  echo "Error: weasyprint is required but was not found in PATH." >&2
+  echo "Install with: brew install weasyprint" >&2
+  exit 1
+fi
+
+pandoc "$INPUT" \
+  -s \
+  --lua-filter="$REPO_DIR/share/pandoc-footnotes-to-html.lua" \
+  --pdf-engine=weasyprint \
+  --css="$REPO_DIR/share/turabian-footnote-pdf.css" \
+  --output "$OUTPUT"

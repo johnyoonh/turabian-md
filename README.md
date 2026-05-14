@@ -1,8 +1,8 @@
 # turabian-md
 
-Convert academic Markdown papers into Turabian-style DOCX files without relying on Pandoc for layout.
+Convert academic Markdown papers into Turabian-style DOCX and PDF files.
 
-The installed command is `md2doc`.
+The installed commands are `md2doc` and `md2pdf`.
 
 ## Install
 
@@ -15,21 +15,35 @@ After linking, use the command from anywhere:
 
 ```sh
 md2doc paper.md paper.docx
+md2pdf paper.md paper.pdf
 ```
 
 The repo also includes `bin/md_to_docx.js` as a compatibility wrapper for the older script name.
 
 ## Usage
 
+DOCX:
+
 ```sh
 md2doc <input.md> <output.docx>
+```
+
+PDF:
+
+```sh
+md2pdf <input.md> <output.pdf>
 ```
 
 Example:
 
 ```sh
 md2doc examples/sample-paper.md /tmp/sample-paper.docx
+md2pdf examples/sample-paper.md /tmp/sample-paper.pdf
 ```
+
+`md2pdf` uses Pandoc, WeasyPrint, and the bundled CSS/Lua filter in `share/`.
+The filter converts Pandoc Markdown footnotes into real page footnotes instead
+of a back-of-document notes section.
 
 ## Front Matter
 
@@ -79,6 +93,16 @@ The DOCX output is intended for Turabian 9th edition / Chicago-style academic pa
 - title page without page number
 - later pages with `Surname N` in the header
 
+The PDF output is intended for a lightweight Turabian-style reading copy:
+
+- Times New Roman
+- 12 pt body text
+- 1-inch margins
+- double-spaced body paragraphs
+- 0.5-inch first-line paragraph indent
+- real page footnotes via WeasyPrint
+- title page without page number
+
 ## Markdown Features
 
 Supported body features:
@@ -107,3 +131,16 @@ Bibliography entries should be listed under `## Bibliography`, separated by blan
 ## Local Legacy Commands
 
 This repo replaces the older standalone `~/.local/bin/md_to_docx.js` workflow. The old `turabian` command can remain installed as a legacy command while `md2doc` becomes the main entry point.
+
+## Dependencies
+
+`md2doc` requires Node.js dependencies installed with `npm install`.
+
+`md2pdf` requires:
+
+```sh
+brew install pandoc weasyprint
+```
+
+If `md2pdf` reports that either command is missing, install the missing tool
+and retry.

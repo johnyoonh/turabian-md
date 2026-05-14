@@ -4,10 +4,12 @@
   "description": "Convert academic Markdown papers into Turabian-style DOCX files.",
   "bin": {
     "md2doc": "./bin/md2doc.js",
+    "md2pdf": "./bin/md2pdf",
     "md_to_docx.js": "./bin/md_to_docx.js"
   },
   "scripts": {
-    "smoke": "node ./bin/md2doc.js examples/sample-paper.md /tmp/turabian-md-sample.docx"
+    "smoke": "node ./bin/md2doc.js examples/sample-paper.md /tmp/turabian-md-sample.docx",
+    "smoke:pdf": "./bin/md2pdf examples/sample-paper.md /tmp/turabian-md-sample.pdf"
   },
   "keywords": [
     "markdown",
