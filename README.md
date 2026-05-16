@@ -20,6 +20,31 @@ md2pdf paper.md paper.pdf
 
 The repo also includes `bin/md_to_docx.js` as a compatibility wrapper for the older script name.
 
+## Quick Start for a New Markdown Paper
+
+From any directory, run:
+
+```sh
+md2doc paper.md paper.docx
+md2pdf paper.md paper.pdf
+```
+
+For example:
+
+```sh
+md2doc reports/my-paper.md reports/my-paper.docx
+md2pdf reports/my-paper.md reports/my-paper.pdf
+```
+
+Recommended workflow:
+
+1. Write the paper in the Markdown format shown below.
+2. Run `md2doc` to create the editable Word document.
+3. Open the DOCX in Microsoft Word once and save it. Word is the safest final normalizer for DOCX files.
+4. Run `md2pdf` to create a PDF reading copy with page footnotes.
+
+If you only need a PDF, you can run only `md2pdf`. If you need a Word file to send or edit, use `md2doc`.
+
 ## Usage
 
 DOCX:
@@ -77,6 +102,62 @@ Defaults:
 
 - `author`: `Yi Hyan Yoon`
 - `institution`: `Southwestern Baptist Theological Seminary`
+
+## Expected Markdown Format
+
+Use YAML front matter, body headings, caret-style footnote references, a `## Footnotes` section, and optionally a `## Bibliography` section.
+
+```md
+---
+title: "AI in Missions for Christian Technologists"
+subtitle: "Theological Anthropology and Technical Stewardship"
+author: "John (Yi Hyan) Yoon"
+course: "MISSN-3363"
+professor: "Prof. Sieberhagen"
+institution: "Southwestern Baptist Theological Seminary"
+term: "Spring 2026"
+date: "May 16, 2026"
+---
+
+## Introduction
+
+This is the first body paragraph. It will be double-spaced with a first-line indent.^1
+
+This is a second body paragraph.
+
+## Main Argument
+
+Use `##` for major section headings.
+
+### Subsection
+
+Use `###` for second-level headings.
+
+#### Lower-Level Subsection
+
+Use `####` for third-level headings.
+
+> Use block quotes for longer quoted material. Block quotes are single-spaced and indented on both sides.
+
+## Footnotes
+
+1. First footnote text. Use Turabian/Chicago note format here.
+
+## Bibliography
+
+Lennox, John C. *2084 and the AI Revolution*. Updated and expanded edition. Grand Rapids: Zondervan, 2024.
+
+Stetzer, Ed. "What Is a Human in the Machine Age? The Imago Dei and AI." Missional AI. YouTube video, April 22, 2026. https://www.youtube.com/watch?v=CITMVWoDa2k.
+```
+
+Notes:
+
+- Use `^1`, `^2`, and so on for footnote references in the body.
+- Put matching numbered notes under `## Footnotes`.
+- Do not use Pandoc-style footnotes such as `[^1]` with `md2doc`; the DOCX converter expects caret-style notes.
+- `md2pdf` can handle normal Markdown footnotes through Pandoc, but using the same caret-style format keeps one source file compatible with both commands.
+- Keep one blank line between paragraphs.
+- Use `## Bibliography` only if you want a bibliography at the end.
 
 ## Formatting
 
