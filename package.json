@@ -5,9 +5,11 @@
   "bin": {
     "md2doc": "./bin/md2doc.js",
     "md2pdf": "./bin/md2pdf",
+    "md2check": "./bin/md2check.js",
     "md_to_docx.js": "./bin/md_to_docx.js"
   },
   "scripts": {
+    "test": "node ./tests/check-fixtures.js",
     "smoke": "node ./bin/md2doc.js examples/sample-paper.md /tmp/turabian-md-sample.docx",
     "smoke:pdf": "./bin/md2pdf examples/sample-paper.md /tmp/turabian-md-sample.pdf"
   },

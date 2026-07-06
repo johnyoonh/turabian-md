@@ -2,7 +2,7 @@
 
 Convert academic Markdown papers into Turabian-style DOCX and PDF files.
 
-The installed commands are `md2doc` and `md2pdf`.
+The installed commands are `md2doc`, `md2pdf`, and `md2check`.
 
 ## Install
 
@@ -16,6 +16,7 @@ After linking, use the command from anywhere:
 ```sh
 md2doc paper.md paper.docx
 md2pdf paper.md paper.pdf
+md2check paper.md
 ```
 
 The repo also includes `bin/md_to_docx.js` as a compatibility wrapper for the older script name.
@@ -34,14 +35,16 @@ For example:
 ```sh
 md2doc reports/my-paper.md reports/my-paper.docx
 md2pdf reports/my-paper.md reports/my-paper.pdf
+md2check reports/my-paper.md
 ```
 
 Recommended workflow:
 
 1. Write the paper in the Markdown format shown below.
-2. Run `md2doc` to create the editable Word document.
-3. Open the DOCX in Microsoft Word once and save it. Word is the safest final normalizer for DOCX files.
-4. Run `md2pdf` to create a PDF reading copy with page footnotes.
+2. Run `md2check` to catch reusable mechanics issues before conversion.
+3. Run `md2doc` to create the editable Word document.
+4. Open the DOCX in Microsoft Word once and save it. Word is the safest final normalizer for DOCX files.
+5. Run `md2pdf` to create a PDF reading copy with page footnotes.
 
 If you only need a PDF, you can run only `md2pdf`. If you need a Word file to send or edit, use `md2doc`.
 
@@ -59,11 +62,18 @@ PDF:
 md2pdf <input.md> <output.pdf>
 ```
 
+Mechanics check:
+
+```sh
+md2check <input.md>
+```
+
 Example:
 
 ```sh
 md2doc examples/sample-paper.md /tmp/sample-paper.docx
 md2pdf examples/sample-paper.md /tmp/sample-paper.pdf
+md2check examples/sample-paper.md
 ```
 
 `md2pdf` uses Pandoc, WeasyPrint, and the bundled CSS/Lua filter in `share/`.
@@ -208,6 +218,20 @@ This sentence has a footnote.^1
 ```
 
 Bibliography entries should be listed under `## Bibliography`, separated by blank lines.
+
+## Mechanics Check
+
+`md2check` performs warn-only checks for repeatable Turabian mechanics issues before conversion:
+
+- Scripture abbreviations with periods before references, such as `Gen. 1:26`.
+- Numeric ranges using hyphen or double hyphen instead of an en dash.
+- Footnote page locators with labels such as `p.`, `pp.`, or `pages`.
+- Footnote locators such as `chap.`, `chapter`, `loc.`, or `location` when page numbers may be required.
+- Footnote entries not separated by exactly one blank line in Markdown.
+- Bibliography entries not separated by exactly one blank line in Markdown.
+- Bibliography entries that appear to repeat the same author and title.
+
+The checker exits `0` when no warnings are found, `1` when warnings are found, and `2` for usage or input errors. It does not judge argument quality, doctrinal adequacy, prose clarity, or full citation correctness. Always inspect the final DOCX/PDF visually, especially footnote spacing.
 
 ## Local Legacy Commands
 
