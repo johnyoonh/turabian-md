@@ -11,6 +11,7 @@ REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 INPUT="$1"
 OUTPUT="$2"
+TMP_INPUT=""
 
 if ! command -v pandoc >/dev/null 2>&1; then
   echo "Error: pandoc is required but was not found in PATH." >&2
@@ -23,8 +24,20 @@ if ! command -v weasyprint >/dev/null 2>&1; then
   exit 1
 fi
 
-pandoc "$INPUT" \
+TMP_INPUT="$(mktemp -t turabian-md.XXXXXX.md)"
+trap 'rm -f "$TMP_INPUT"' EXIT
+
+node - "$REPO_DIR" "$INPUT" "$TMP_INPUT" <<'NODE'
+const fs = require('fs');
+const path = require('path');
+const [repoDir, input, output] = process.argv.slice(2);
+const { normalizeNumericRanges } = require(path.join(repoDir, 'lib', 'typography'));
+fs.writeFileSync(output, normalizeNumericRanges(fs.readFileSync(input, 'utf8')));
+NODE
+
+pandoc "$TMP_INPUT" \
   -s \
+  -f markdown \
   --lua-filter="$REPO_DIR/share/pandoc-footnotes-to-html.lua" \
   --pdf-engine=weasyprint \
   --css="$REPO_DIR/share/turabian-footnote-pdf.css" \

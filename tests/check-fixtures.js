@@ -6,6 +6,7 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 const { checkMarkdown } = require('../lib/check');
+const { normalizeNumericRanges } = require('../lib/typography');
 
 function readFixture(name) {
   const file = path.join(__dirname, 'fixtures', name);
@@ -38,5 +39,9 @@ assert.deepStrictEqual(ruleIds(warnings), [
 
 assert(warnings.every((item) => Number.isInteger(item.line) && item.line > 0));
 assert(warnings.every((item) => Number.isInteger(item.column) && item.column > 0));
+assert.strictEqual(
+  normalizeNumericRanges('Use 406--9 and Gen 1:26--28, but leave thought--not typed prose alone.'),
+  'Use 406–9 and Gen 1:26–28, but leave thought--not typed prose alone.',
+);
 
 console.log('check-fixtures passed');

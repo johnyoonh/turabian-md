@@ -224,7 +224,7 @@ Bibliography entries should be listed under `## Bibliography`, separated by blan
 `md2check` performs warn-only checks for repeatable Turabian mechanics issues before conversion:
 
 - Scripture abbreviations with periods before references, such as `Gen. 1:26`.
-- Numeric ranges using hyphen or double hyphen instead of an en dash.
+- Numeric ranges using a single hyphen, such as `406-9` or `Gen 1:26-28`.
 - Footnote page locators with labels such as `p.`, `pp.`, or `pages`.
 - Footnote locators such as `chap.`, `chapter`, `loc.`, or `location` when page numbers may be required.
 - Footnote entries not separated by exactly one blank line in Markdown.
@@ -232,6 +232,8 @@ Bibliography entries should be listed under `## Bibliography`, separated by blan
 - Bibliography entries that appear to repeat the same author and title.
 
 The checker exits `0` when no warnings are found, `1` when warnings are found, and `2` for usage or input errors. It does not judge argument quality, doctrinal adequacy, prose clarity, or full citation correctness. Always inspect the final DOCX/PDF visually, especially footnote spacing.
+
+For ranges, write ASCII double hyphen in Markdown source, such as `406--9` or `Gen 1:26--28`. `md2doc` and `md2pdf` render those numeric ranges with an en dash in output. Ordinary hyphens remain unchanged, and the tools do not rewrite nonnumeric `--` used in prose.
 
 ## Local Legacy Commands
 

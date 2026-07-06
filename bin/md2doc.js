@@ -50,6 +50,7 @@ const {
 } = require('docx');
 const fs   = require('fs');
 const path = require('path');
+const { normalizeNumericRanges } = require('../lib/typography');
 
 // ── CLI ───────────────────────────────────────────────────────────────────────
 const args = process.argv.slice(2);
@@ -96,6 +97,7 @@ function toHeadlineCaps(text) {
 // Order: *** before ** before * to prevent partial matches.
 // ^N emits a docx FootnoteReferenceRun so Word inserts a live superscript.
 function parseInline(text, size = SZ) {
+  text = normalizeNumericRanges(text);
   const runs = [];
   const re   = /\^(\d+)|\*\*\*(.+?)\*\*\*|\*\*(.+?)\*\*|\*(.+?)\*|_(.+?)_/g;
   let last = 0, m;
