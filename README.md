@@ -2,7 +2,7 @@
 
 Convert academic Markdown papers into Turabian-style DOCX and PDF files.
 
-The installed commands are `md2doc`, `md2pdf`, and `md2check`.
+The installed commands are `turabian`, `md2doc`, `md2pdf`, and `md2check`.
 
 ## Install
 
@@ -17,9 +17,12 @@ After linking, use the command from anywhere:
 md2doc paper.md paper.docx
 md2pdf paper.md paper.pdf
 md2check paper.md
+turabian paper.md
 ```
 
-The repo also includes `bin/md_to_docx.js` as a compatibility wrapper for the older script name.
+`turabian` is a compatibility alias for `md2doc`. When no output path is given,
+it creates a `.docx` beside the input Markdown file. The repo also includes
+`bin/md_to_docx.js` as a compatibility wrapper for the older script name.
 
 ## Quick Start for a New Markdown Paper
 
@@ -237,7 +240,9 @@ For ranges, write ASCII double hyphen in Markdown source, such as `406--9` or `G
 
 ## Local Legacy Commands
 
-This repo replaces the older standalone `~/.local/bin/md_to_docx.js` workflow. The old `turabian` command can remain installed as a legacy command while `md2doc` becomes the main entry point.
+This repo replaces the older standalone `md_to_docx.js` workflow. Running
+`npm link` installs the package-owned `turabian` compatibility command, so its
+`docx` dependency resolves from this package.
 
 ## Dependencies
 

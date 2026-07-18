@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Convert academic Markdown papers into Turabian-style DOCX files.",
   "bin": {
+    "turabian": "./bin/turabian.js",
     "md2doc": "./bin/md2doc.js",
     "md2pdf": "./bin/md2pdf",
     "md2check": "./bin/md2check.js",

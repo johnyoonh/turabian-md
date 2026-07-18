@@ -119,4 +119,21 @@ assert.strictEqual(warningCli.status, 1, warningCli.stdout + warningCli.stderr);
 assert.match(warningCli.stdout, /range-dash/);
 assert.match(warningCli.stdout, /1:26--28/);
 
+const compatibilityDir = fs.mkdtempSync(path.join(require('os').tmpdir(), 'turabian-md-'));
+const compatibilityInput = path.join(compatibilityDir, 'paper.md');
+const compatibilityOutput = path.join(compatibilityDir, 'paper.docx');
+fs.copyFileSync(clean.file, compatibilityInput);
+
+const compatibilityCli = spawnSync(process.execPath, ['./bin/turabian.js', compatibilityInput], {
+  cwd: path.join(__dirname, '..'),
+  encoding: 'utf8',
+});
+assert.strictEqual(
+  compatibilityCli.status,
+  0,
+  compatibilityCli.stdout + compatibilityCli.stderr,
+);
+assert(fs.statSync(compatibilityOutput).size > 0, 'turabian should create a DOCX beside its input');
+fs.rmSync(compatibilityDir, { recursive: true });
+
 console.log('check-fixtures passed');
